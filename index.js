@@ -56,7 +56,11 @@ const sslOpts = {
   cert: require('fs').readFileSync('fullchain.pem'),
 };
 
+var healthcheck = express()
+healthcheck.use('*', (_req, res) => res.sendStatus(200))
+
 http.createServer(app).listen(80);
+http.createServer(healthcheck).listen(4001);
 https.createServer(sslOpts,app).listen(443);
 
 let calledClose = false;
