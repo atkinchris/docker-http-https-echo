@@ -2,18 +2,12 @@ FROM node:9.2-alpine
 
 WORKDIR /app
 
-COPY . .
-
-RUN rm -rf screenshots/
+COPY index.js ./
+COPY package*.json ./
 
 RUN npm install --production
 
-RUN apk --no-cache add openssl
-
-RUN sh generate-cert.sh
-
-EXPOSE 80 443 4001
-
+EXPOSE 4000 4001
 
 ENTRYPOINT ["node", "./index.js"]
 CMD []
